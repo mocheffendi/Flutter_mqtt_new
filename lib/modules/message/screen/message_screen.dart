@@ -108,7 +108,8 @@ class _MessageScreenState extends State<MessageScreen> {
         state == MQTTAppConnectionState.connectedSubscribed) {
       shouldEnable = true;
     } else if ((controller == _topicTextController &&
-        (state == MQTTAppConnectionState.connected || state == MQTTAppConnectionState.connectedUnSubscribed) )) {
+        (state == MQTTAppConnectionState.connected ||
+            state == MQTTAppConnectionState.connectedUnSubscribed))) {
       shouldEnable = true;
     }
     return TextField(
@@ -126,7 +127,7 @@ class _MessageScreenState extends State<MessageScreen> {
       color: Colors.green,
       disabledColor: Colors.grey,
       textColor: Colors.white,
-      disabledTextColor:Colors.black38 ,
+      disabledTextColor: Colors.black38,
       child: const Text('Send'),
       onPressed: state == MQTTAppConnectionState.connectedSubscribed
           ? () {
@@ -156,11 +157,13 @@ class _MessageScreenState extends State<MessageScreen> {
       color: Colors.green,
       disabledColor: Colors.grey,
       textColor: Colors.white,
-      disabledTextColor:Colors.black38 ,
+      disabledTextColor: Colors.black38,
       child: state == MQTTAppConnectionState.connectedSubscribed
           ? const Text('Unsubscribe')
           : const Text('Subscribe'),
-      onPressed: (state == MQTTAppConnectionState.connectedSubscribed) || (state == MQTTAppConnectionState.connectedUnSubscribed)|| (state == MQTTAppConnectionState.connected)
+      onPressed: (state == MQTTAppConnectionState.connectedSubscribed) ||
+              (state == MQTTAppConnectionState.connectedUnSubscribed) ||
+              (state == MQTTAppConnectionState.connected)
           ? () {
               _handleSubscribePress(state);
             }
@@ -172,7 +175,7 @@ class _MessageScreenState extends State<MessageScreen> {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
-        padding:const EdgeInsets.only(left: 10.0, right: 5.0) ,
+        padding: const EdgeInsets.only(left: 10.0, right: 5.0),
         width: 400,
         height: 100,
         decoration: BoxDecoration(
@@ -191,24 +194,26 @@ class _MessageScreenState extends State<MessageScreen> {
     if (state == MQTTAppConnectionState.connectedSubscribed) {
       _manager.unSubscribeFromCurrentTopic();
     } else {
-      String enteredText =  _topicTextController.text;
-      if (enteredText != null && enteredText.isNotEmpty ) {
+      String enteredText = _topicTextController.text;
+      if (enteredText != null && enteredText.isNotEmpty) {
         _manager.subScribeTo(_topicTextController.text);
       } else {
         _showDialog("Please enter a topic.");
       }
     }
-
   }
+
   void _publishMessage(String text) {
     String osPrefix = 'Flutter_iOS';
     if (Platform.isAndroid) {
       osPrefix = 'Flutter_Android';
     }
-    final String message = osPrefix + ' says: ' + text;
+    //final String message = osPrefix + ' says: ' + text;
+    final String message = text;
     _manager.publish(message);
     _messageTextController.clear();
   }
+
   void _showDialog(String message) {
     // flutter defined function
     showDialog(
