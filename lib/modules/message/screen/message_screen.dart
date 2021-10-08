@@ -93,7 +93,7 @@ class _MessageScreenState extends State<MessageScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         Expanded(
-          child: _buildTextFieldWith(_messageTextController, 'Enter a message',
+          child: _buildTextFieldWith(_messageTextController, 'Masukkan Pesan',
               currentAppState.getAppConnectionState),
         ),
         _buildSendButtonFrom(currentAppState.getAppConnectionState)
